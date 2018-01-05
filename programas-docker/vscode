@@ -1,0 +1,16 @@
+#! /bin/sh
+
+echo "Iniciando vscode..."
+CONTAINER=$(docker run -d \
+  --net="host" \
+  -v $(pwd):/code \
+  -v /tmp/.X11-unix:/tmp/.X11-unix \
+  -e DISPLAY=$DISPLAY \
+  jess/vscode:latest \
+  /usr/share/code/code /code ) 
+
+sleep 5s # Docker is not too fast to appear the id kkj
+docker wait $CONTAINER
+
+echo "Salvando alterações..."
+docker commit -a "lucas59356" $CONTAINER jess/vscode:latest
