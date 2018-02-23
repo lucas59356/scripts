@@ -1,0 +1,11 @@
+#! /usr/bin/env zsh
+nplay () {
+	STATUS="$(playerctl -p $1 status)" 
+	TRACK="$(playerctl -p $1 metadata title)" 
+	AUTHOR="$(playerctl -p $1 metadata artist)" 
+	notify-send -i $1 -a "MusicReport" "$STATUS: $AUTHOR - $TRACK"
+}
+for x in $(playerctl -l);
+do
+       	nplay $x
+done
